@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="it.polito.tdp.dizionariograph.DizionarioGraphController">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="607.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.dizionariograph.DizionarioGraphController">
    <top>
       <Label text="Lab8_Dizionario" BorderPane.alignment="CENTER">
          <font>
@@ -20,7 +19,7 @@
       </Label>
    </top>
    <center>
-      <VBox BorderPane.alignment="CENTER">
+      <VBox minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
          <children>
             <HBox spacing="58.0">
                <children>

@@ -44,10 +44,26 @@ public class DizionarioGraphController {
 
     @FXML
     void doGeneraGrafo(ActionEvent event) {
+    	txtResult.clear();
+    	txtParola.clear();
     	
-    	int numeroLettere = Integer.parseInt(txtNumeroLettere.getText());
-    	model.createGraph(numeroLettere);
-    	txtResult.appendText("Il grafo è stato generato\n");
+    	try{ 
+    		int numeroLettere = Integer.parseInt(txtNumeroLettere.getText());
+    		model.createGraph(numeroLettere);
+    		txtResult.appendText("Il grafo è stato generato\n");
+    		
+    		txtNumeroLettere.setDisable(true);
+			btnGrafo.setDisable(true);
+			txtParola.setDisable(false);
+			btnVicini.setDisable(false);
+			btnGradoMax.setDisable(false);
+
+    	
+    	} catch (NumberFormatException nfe) {
+			txtResult.setText("Inserire un numero corretto di lettere!");
+		} catch (RuntimeException re) {
+			txtResult.setText(re.getMessage());
+		}
     }
 
     @FXML
@@ -55,29 +71,52 @@ public class DizionarioGraphController {
     	txtNumeroLettere.clear();
     	txtParola.clear();
     	txtResult.clear();
+    	
+    	txtNumeroLettere.setDisable(false);
+		txtParola.setDisable(true);
+		btnGrafo.setDisable(false);
+		btnVicini.setDisable(true);
+		btnGradoMax.setDisable(true);
 
     }
 
     @FXML
     void doTrovaGradoMax(ActionEvent event) {
-    	int max = model.findMaxDegree();
-    	String sMax = model.getVerticeGradoMax();
-    	List<String> vicini = model.displayNeighbours(sMax);
-    	txtResult.clear();
-    	txtResult.appendText("Grado Max: "+ max + "\nVertice Max: "+sMax+"\n");
-    	for(String tmp: vicini) {
+    	try{
+    		int max = model.findMaxDegree();
+    		String sMax = model.getVerticeGradoMax();
+    		List<String> vicini = model.displayNeighbours(sMax);
+    		txtResult.clear();
+    		txtResult.appendText("Grado Max: "+ max + "\nVertice Max: "+sMax+"\n");
+    		txtResult.appendText("Vicini del vertice massimo:\n");
+    		for(String tmp: vicini) {
     		txtResult.appendText(tmp + "\n");
-    	}
+    		}
+    	}catch (RuntimeException re) {
+			txtResult.setText(re.getMessage());
+		}
     }
 
     @FXML
     void doTrovaVicini(ActionEvent event) {
-    	txtResult.clear();
-    	String vicino = txtParola.getText();
-    	List<String> res = model.displayNeighbours(vicino);
-    	for (String tmp : res) {
-    		txtResult.appendText(tmp + "\n");
-    	}
+    	try {
+    		txtResult.clear();
+    		String vicino = txtParola.getText();
+    		if(vicino==null || vicino.length()==0) {
+    			txtResult.appendText("Inserisci una parola da cercare\n");
+    			return;
+    		}
+    		List<String> res = model.displayNeighbours(vicino);
+    		if(res!=null) {
+    			for (String tmp : res) {
+    				txtResult.appendText(tmp + "\n");
+    			}
+    		} else {
+    			txtResult.appendText("Non è stato trovato nessun risultato");
+    		}
+    	} catch (RuntimeException re) {
+			txtResult.setText(re.getMessage());
+		}
     }
 
     @FXML
@@ -89,6 +128,10 @@ public class DizionarioGraphController {
         assert btnGradoMax != null : "fx:id=\"btnGradoMax\" was not injected: check your FXML file 'DizionarioGraph.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'DizionarioGraph.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'DizionarioGraph.fxml'.";
+        
+        txtParola.setDisable(true);
+		btnVicini.setDisable(true);
+		btnGradoMax.setDisable(true);
 
     }
     
