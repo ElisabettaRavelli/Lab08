@@ -36,6 +36,7 @@ public class Model {
 		//aggiungo gli archi
 		for(String fixed : allWords) {
 			for(String var : allWords) {
+				//se le due parole differiscono solo per una lettera e l'arco non c'è -> lo creo
 				if(compare2words(fixed, var, numeroLettere) && grafo.getEdge(fixed, var) == null) {
 					grafo.addEdge(fixed, var);
 				}
@@ -45,6 +46,7 @@ public class Model {
 		
 	}
 
+	//Metodo per trovare i vicini di uno specifico vertice
 	public List<String> displayNeighbours(String parolaInserita) {
 		List<String> resultString = new ArrayList<String>();
 		Set<DefaultEdge> result = grafo.edgesOf(parolaInserita);
@@ -54,6 +56,7 @@ public class Model {
 		return resultString;
 	}
 
+	//Metodo per trovare il massimo grado tra tutti i vertici 
 	public int findMaxDegree() {
 		int gradoMax = 0;
 		
@@ -69,6 +72,8 @@ public class Model {
 		return gradoMax;
 	}
 	
+	//Metodo che mi permette di capire se due parole differiscono solo per una lettera (true)
+	//o se differiscono per più lettere o nessuna (false)
 	public boolean compare2words(String w1, String w2, int numeroLettere) {
 		
 		int count = 0;
